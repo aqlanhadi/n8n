@@ -1,4 +1,4 @@
-FROM golang:1.23.4-alpine AS go-builder
+FROM golang:1.24.0-alpine AS go-builder
 
 # Install git
 RUN apk add --no-cache git
@@ -7,7 +7,9 @@ RUN apk add --no-cache git
 RUN git clone --depth=1 https://github.com/aqlanhadi/kwgn-cli && \
     cd kwgn-cli && \
     go mod download && \
-    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /go/bin/kwgn-cli .
+    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /go/bin/kwgn-cli . && \
+    # Remove source code and credentials after building to reduce layer size
+    cd / && rm -rf /go/src/* /root/.cache/go-build
 
 FROM n8nio/n8n
 
