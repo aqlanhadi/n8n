@@ -24,3 +24,5 @@ RUN chmod +x /usr/local/bin/kwgn
 
 # Switch back to the default n8n user
 USER node
+
+EXPOSE 5678
