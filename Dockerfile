@@ -16,7 +16,7 @@ FROM n8nio/n8n
 USER root
 
 # Install dependencies
-RUN apk add --no-cache qpdf
+RUN apk add --no-cache qpdf poppler poppler-utils
 
 # Copy kwgn binary
 COPY --from=go-builder /go/bin/kwgn-cli /usr/local/bin/kwgn
